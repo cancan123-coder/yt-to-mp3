@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Konverter YouTube ke MP3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white shadow-xl rounded-2xl p-6 max-w-md w-full">
+        <h1 class="text-2xl font-bold text-center mb-4">YouTube ke MP3</h1>
+        <form id="convertForm" class="space-y-4">
+            <input type="url" id="videoUrl" placeholder="Masukkan URL YouTube..." required
+                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                Konversi ke MP3
+            </button>
+        </form>
+
+        <div id="loader" class="hidden text-center mt-4">
+            <p>Memproses video...</p>
+            <div class="spinner"
+                style="width:30px; height:30px; border:4px solid #ccc; border-top:4px solid #333; border-radius:50%; animation: spin 1s linear infinite;">
+            </div>
+            <div id="estimation" class="text-gray-600 mt-2">Estimasi waktu: ±10–20 detik</div>
+            <div id="progressContainer" class="w-full bg-gray-300 rounded mt-4 h-4">
+                <div id="progressBar" class="bg-blue-500 h-4 rounded w-0 transition-all duration-200 ease-linear"></div>
+            </div>
+
+        </div>
+
+        <style>
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        </style>
+
+
+        <div id="result" class="mt-6 hidden">
+            <img id="videoThumb" src="" alt="Thumbnail" style="max-width: 300px; margin-bottom: 1rem;">
+            <p><strong>Judul:</strong> <span id="videoTitle"></span></p>
+            <p><strong>Durasi:</strong> <span id="videoDuration"></span></p>
+            <p class="font-semibold text-center text-green-600">✅ Video berhasil dikonversi!</p>
+            <a href="#" id="downloadLink"
+                class="block text-center mt-4 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700" download>
+                Unduh MP3
+            </a>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById("convertForm");
+        const result = document.getElementById("result");
+        const loader = document.getElementById("loader");
+        const downloadLink = document.getElementById("downloadLink");
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const url = document.getElementById("videoUrl").value;
+            result.classList.add("hidden");
+            loader.classList.remove("hidden");
+            document.getElementById("estimation").textContent = "Estimasi waktu: ±10–20 detik";
+            startProgressBar();
+
+            try {
+                const start = Date.now();
+                const res = await fetch("/convert", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url }),
+                });
+
+                const data = await res.json();
+                finishProgressBar();
+                loader.classList.add("hidden");
+
+                if (data.status === "success") {
+                    result.classList.remove("hidden");
+                    downloadLink.href = data.download_url;
+                    document.getElementById("videoTitle").textContent = data.title || "-";
+                    document.getElementById("videoDuration").textContent = formatDuration(data.duration);
+                    document.getElementById("videoThumb").src = data.thumbnail || "";
+                    const total = Math.round((Date.now() - start) / 1000);
+                    document.getElementById("estimation").textContent = `Selesai dalam ${total} detik`;
+                } else {
+                    alert("Gagal: " + data.message);
+                }
+            } catch (err) {
+                finishProgressBar();
+                loader.classList.add("hidden");
+                document.getElementById("estimation").textContent = "";
+                alert("Terjadi kesalahan saat koneksi.");
+            }
+        });
+
+
+        function formatDuration(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        let progress = 0;
+        let progressInterval;
+
+        function startProgressBar() {
+            const bar = document.getElementById("progressBar");
+            progress = 0;
+            bar.style.width = "0%";
+
+            progressInterval = setInterval(() => {
+                if (progress < 90) {
+                    progress += 1;
+                    bar.style.width = progress + "%";
+                }
+            }, 200); // 200ms → kira-kira 18 detik sampai 90%
+        }
+
+        function finishProgressBar() {
+            clearInterval(progressInterval);
+            const bar = document.getElementById("progressBar");
+            bar.style.width = "100%";
+        }
+
+
+    </script>
+
+
+
+</body>
+
+</html>
