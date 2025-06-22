@@ -4,96 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>YouTube to MP3 Converter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <title>Konverter YouTube ke MP3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body {
-            margin: 0;
-            background-color: #f9f9f9;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        nav {
-            background-color: #20232a;
-            padding: 1rem 2rem;
-            color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        nav h1 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-left: 1rem;
-            font-weight: 500;
-        }
-
-        .container {
-            flex: 1;
-            max-width: 600px;
-            margin: 2rem auto;
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 0.75rem;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        button {
-            background: #0070f3;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        button:hover {
-            background: #005ac1;
-        }
-
-        #loader,
-        #result {
-            margin-top: 1.5rem;
-        }
-
-        .spinner {
-            width: 30px;
-            height: 30px;
-            border: 4px solid #ccc;
-            border-top: 4px solid #333;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -103,85 +16,71 @@
                 transform: rotate(360deg);
             }
         }
-
-        #progressContainer {
-            margin-top: 1rem;
-            background: #ddd;
-            height: 6px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        #progressBar {
-            height: 6px;
-            background: #0070f3;
-            width: 0%;
-            transition: width 0.2s linear;
-        }
-
-        footer {
-            background: #20232a;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                margin: 1rem;
-                padding: 1.5rem;
-            }
-
-            nav {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
     </style>
 </head>
 
-<body>
-    <!-- Navbar -->
-    <nav>
-        <h1>YTMP3</h1>
-        <div>
-            <a href="#">Beranda</a>
-            <a href="#">Tentang</a>
-            <a href="#">Kontak</a>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+
+    <!-- ✅ Navbar -->
+    <nav class="bg-blue-600 text-white px-4 py-3 shadow">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <h1 class="text-xl font-semibold">🎵 YTMP3 Converter</h1>
+            <div class="space-x-4">
+                <a href="#" class="hover:text-gray-200">Beranda</a>
+                <a href="#" class="hover:text-gray-200">Tentang</a>
+                <a href="#" class="hover:text-gray-200">Kontak</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Main Container -->
-    <div class="container">
-        <form id="convertForm">
-            <div class="form-group">
-                <label for="videoUrl"><strong>Masukkan URL YouTube:</strong></label>
-                <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=xxxx" required />
+    <!-- ✅ Konten Utama -->
+    <main class="flex-grow flex items-center justify-center p-4">
+        <div class="bg-white shadow-xl rounded-2xl p-6 max-w-md w-full">
+            <div class="flex justify-center mb-4">
+                <img src="/logo.png" alt="Logo YTMP3" class="h-16 w-auto">
             </div>
-            <button type="submit">Convert</button>
-        </form>
 
-        <div id="loader" class="hidden text-center mt-4">
-            <p>Memproses video...</p>
-            <div id="progressContainer">
-                <div id="progressBar"></div>
+            <h2 class="text-2xl font-bold text-center mb-4">YouTube ke MP3</h2>
+            <form id="convertForm" class="space-y-4">
+                <input type="url" id="videoUrl" placeholder="Masukkan URL YouTube..." required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <button type="submit"
+                    class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                    Konversi ke MP3
+                </button>
+            </form>
+
+            <div id="loader" class="hidden text-center mt-4">
+                <p>Memproses video...</p>
+                <div class="spinner mx-auto mt-2"
+                    style="width:30px; height:30px; border:4px solid #ccc; border-top:4px solid #333; border-radius:50%; animation: spin 1s linear infinite;">
+                </div>
+                <div id="estimation" class="text-gray-600 mt-2">Estimasi waktu: ±10–20 detik</div>
+                <div id="progressContainer" class="w-full bg-gray-300 rounded mt-4 h-4">
+                    <div id="progressBar" class="bg-blue-500 h-4 rounded w-0 transition-all duration-200 ease-linear">
+                    </div>
+                </div>
             </div>
-            <div id="estimation" class="text-sm text-gray-600 mt-2"></div>
-        </div>
 
-        <div id="result" class="hidden mt-4">
-            <img id="videoThumb" src="" alt="Thumbnail" style="max-width: 100%; margin-bottom: 1rem;">
-            <p><strong>Judul:</strong> <span id="videoTitle"></span></p>
-            <p><strong>Durasi:</strong> <span id="videoDuration"></span></p>
-            <p>✅ Konversi berhasil! <a id="downloadLink" href="#" download>Unduh MP3</a></p>
+            <div id="result" class="mt-6 hidden">
+                <img id="videoThumb" src="" alt="Thumbnail" class="max-w-full mx-auto mb-4 rounded shadow" />
+                <p><strong>Judul:</strong> <span id="videoTitle"></span></p>
+                <p><strong>Durasi:</strong> <span id="videoDuration"></span></p>
+                <p class="font-semibold text-center text-green-600 mt-2">✅ Video berhasil dikonversi!</p>
+                <a href="#" id="downloadLink"
+                    class="block text-center mt-4 bg-green-600 text-white py-2 rounded-lg hover:bg-green-700" download>
+                    Unduh MP3
+                </a>
+            </div>
         </div>
-    </div>
+    </main>
 
-    <!-- Footer -->
-    <footer>
-        &copy; 2025 YTMP3 Converter. Dibuat dengan ❤️ oleh Developer.
+    <!-- ✅ Footer -->
+    <footer class="bg-gray-800 text-white text-center py-4">
+        &copy; 2025 YTMP3 Converter. Dibuat dengan ❤️ oleh CanutsXcode.
     </footer>
 
+    <!-- ✅ Script -->
     <script>
         const form = document.getElementById("convertForm");
         const result = document.getElementById("result");
@@ -195,8 +94,7 @@
             result.classList.add("hidden");
             loader.classList.remove("hidden");
             document.getElementById("estimation").textContent = "Estimasi waktu: ±10–20 detik";
-
-            startRealProgressBar(20); // default estimasi 20 detik
+            startProgressBar();
 
             try {
                 const start = Date.now();
@@ -235,18 +133,18 @@
             return `${mins}:${secs.toString().padStart(2, '0')}`;
         }
 
+        let progress = 0;
         let progressInterval;
-        function startRealProgressBar(durationInSec) {
-            const estimatedTime = Math.max(5, Math.floor(durationInSec / 1.5));
-            let current = 0;
+
+        function startProgressBar() {
             const bar = document.getElementById("progressBar");
+            progress = 0;
             bar.style.width = "0%";
-            clearInterval(progressInterval);
             progressInterval = setInterval(() => {
-                current += 0.2;
-                const percent = Math.min(100, (current / estimatedTime) * 100);
-                bar.style.width = percent + "%";
-                if (percent >= 99) clearInterval(progressInterval);
+                if (progress < 90) {
+                    progress += 1;
+                    bar.style.width = progress + "%";
+                }
             }, 200);
         }
 
