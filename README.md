@@ -2,7 +2,7 @@
 
 ## Convert youtube to MP3 script with nodejs created by `CanutsXcode`
 
-> Script convert youtube to MP3 dengan tampilan web sederhana gratis, silahkan tinggal di comot aja, bebas dikembangkan tampilan nya sesuai yang anda inginkan **Mohon untuk tidak merubah nama sang pembuat jika** 🙏 😊
+> Script convert youtube to MP3 dengan tampilan web sederhana gratis, silahkan tinggal di comot aja, bebas dikembangkan tampilan nya sesuai yang anda inginkan... **Mohon untuk tidak merubah nama sang pembuat** 🙏 😊
 
 ### Instalasi dan konfigurasi
 
