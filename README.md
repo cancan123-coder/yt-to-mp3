@@ -40,4 +40,4 @@ node server.js
 
 > contoh input link youtube untuk di convert: https://www.youtube.com/watch?v=jUkoL9RE72o
 
-Jika tidak paham silahkan kunjungi tutorial di youtube saya
+Jika tidak paham silahkan kunjungi tutorial lengkap di ▶️ YouTube kami
