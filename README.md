@@ -36,7 +36,7 @@ node server.js
 
 1. Convert youtube to MP3 bisa langsung di download
 2. File terhapus otomatis setelah 1 jam
-3. Bisa deploy langsung ke: [Railway](https://railway.com) / [Render](https://render.com) / VPS [Digitalocean](https://digitalocean.com), [Contabo](https://contabo.com)
+3. Bisa deploy langsung ke: [Railway](https://railway.com) / [Render](https://render.com) / VPS [Digitalocean](https://digitalocean.com), [Contabo](https://contabo.com) dll
 
 > contoh input link youtube untuk di convert: https://www.youtube.com/watch?v=jUkoL9RE72o
 
