@@ -25,7 +25,7 @@ Buka browser anda bebas: input di port 5000 / http://localhost:5000
 npm install
 ```
 
-Jika telah selesai install module coba jalankan perintah pertama: 
+Jika telah selesai install module coba jalankan ulang perintah pertama: 
 
 ```
 node server.js
