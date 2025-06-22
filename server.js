@@ -84,12 +84,16 @@ app.post("/convert", async (req, res) => {
             audioQuality: 0,
         });
 
+        const stats = fs.statSync(outputPath);
+        const fileSizeBytes = stats.size;
+
         return res.json({
             status: "success",
             download_url: `/downloads/${filename}`,
             title,
             duration,
             thumbnail,
+            filesize: fileSizeBytes
         });
     } catch (err) {
         console.error("Gagal mengonversi:", err.message);
