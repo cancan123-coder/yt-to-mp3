@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Node modules
 node_modules/
 
@@ -29,3 +30,6 @@ Thumbs.db
 pids
 *.pid
 *.seed
+=======
+node_modules/
+>>>>>>> cb36b030bcea29374d38748f4bd73385dd5886ec
